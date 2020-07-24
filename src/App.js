@@ -3,27 +3,32 @@ import "./App.css";
 
 import HeaderImage from "./components/headerImage/headerImage";
 import JobCards from "./components/jobCards/jobCards";
+import FilterCard from "./components/filterCard/filterCard.js";
 import appData from "./data.json";
 
 function App() {
-  const [jobData, setJobData] = useState([...appData]);
-  // console.log("data in the application", appData);
-
-  useEffect(() => {
-    const newJobData = jobData.map((job) => {
+  const [jobData, setJobData] = useState(
+    appData.map((job) => {
       return {
         ...job,
         skillButtons: [...job.tools, ...job.languages, job.role, job.level],
       };
-    });
-    setJobData([...newJobData]);
-    console.log(newJobData);
-  }, []);
+    })
+  );
+
+  const [filterData, setFilterData] = useState([]);
+  // console.log("data in the application", appData);
 
   return (
     <div className='App'>
       <HeaderImage />
-      <JobCards jobData={jobData} />
+      <FilterCard filterData={filterData} />
+      <JobCards
+        jobData={jobData}
+        setJobData={setJobData}
+        setFilterData={setFilterData}
+        filterData={filterData}
+      />
     </div>
   );
 }

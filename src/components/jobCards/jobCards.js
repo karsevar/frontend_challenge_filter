@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./jobCards.scss";
 
 import photosnap from "../../images/photosnap.svg";
@@ -27,7 +27,17 @@ function JobCards(props) {
   };
 
   const jobData = props.jobData;
+  const filterData = props.filterData;
+  const setFilterData = props.setFilterData;
   console.log("job data in JobCards component", jobData);
+
+  const handleFilterClick = (event, item) => {
+    console.log("item clicked", item);
+    if (!filterData.includes(item)) {
+      setFilterData([...filterData, item]);
+    }
+  };
+
   return (
     <div className='job-cards-container'>
       {jobData.map((job) => {
@@ -71,7 +81,10 @@ function JobCards(props) {
               {job.skillButtons ? (
                 job.skillButtons.map((skill) => {
                   return (
-                    <div className='skill-button'>
+                    <div
+                      className='skill-button'
+                      onClick={(event) => handleFilterClick(event, skill)}
+                    >
                       <h4>{skill}</h4>
                     </div>
                   );

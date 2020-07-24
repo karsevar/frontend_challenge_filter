@@ -9,6 +9,7 @@
     padding: 25px;
     margin-bottom: 15px;
     width: 85%;
+    max-width: 1300px;
     height: 125px;
     border-radius: 5px;
     display: flex;
@@ -109,7 +110,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 50%;
+  width: 30%;
 
   .skill-button {
     margin-left: 10px;
