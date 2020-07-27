@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import appData from "../../data.json";
 import "./jobCards.scss";
 
 import photosnap from "../../images/photosnap.svg";
@@ -13,6 +14,15 @@ import eyecamCo from "../../images/eyecam-co.svg";
 import theAirFilterCompany from "../../images/the-air-filter-company.svg";
 
 function JobCards(props) {
+  const [jobData, setJobData] = useState(
+    appData.map((job) => {
+      return {
+        ...job,
+        skillButtons: [...job.tools, ...job.languages, job.role, job.level],
+      };
+    })
+  );
+
   const companyLogos = {
     photosnap: photosnap,
     manage: manage,
@@ -26,17 +36,46 @@ function JobCards(props) {
     theAirFilterCompany: theAirFilterCompany,
   };
 
-  const jobData = props.jobData;
   const filterData = props.filterData;
   const setFilterData = props.setFilterData;
-  console.log("job data in JobCards component", jobData);
+  const filterLength = props.filterLength;
+  const setFilterLength = props.setFilterLength;
 
   const handleFilterClick = (event, item) => {
-    console.log("item clicked", item);
     if (!filterData.includes(item)) {
       setFilterData([...filterData, item]);
+      setFilterLength(filterLength + 1);
+      console.log("filter length", filterLength);
     }
   };
+
+  useEffect(() => {
+    // setJobData(
+    //   appData.map((job) => {
+    //     return {
+    //       ...job,
+    //       skillButtons: [...job.tools, ...job.languages, job.role, job.level],
+    //     };
+    //   })
+    // );
+
+    let newJobData = appData.map((job) => {
+      return {
+        ...job,
+        skillButtons: [...job.tools, ...job.languages, job.role, job.level],
+      };
+    });
+
+    if (filterData.length !== 0) {
+      for (let i = 0; filterData.length > i; i++) {
+        newJobData = newJobData.filter(
+          (skills) => skills.skillButtons.indexOf(filterData[i]) !== -1
+        );
+      }
+    }
+    setJobData(newJobData);
+    console.log("rerender upon new filter", filterData);
+  }, [filterData]);
 
   return (
     <div className='job-cards-container'>
