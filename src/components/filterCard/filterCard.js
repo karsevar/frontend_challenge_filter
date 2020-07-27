@@ -24,7 +24,9 @@ function FilterCard(props) {
             return (
               <div className='filter-card'>
                 <h4>{filter}</h4>
-                <img src={removeIcon} />
+                <div className='delete-btn-container'>
+                  <img src={removeIcon} />
+                </div>
               </div>
             );
           })
